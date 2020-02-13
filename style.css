@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 2rem;
@@ -34,10 +38,10 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-    background-color: rgb(232, 64, 182);
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(232, 64, 182);
 }
 
 #project-list {
@@ -56,8 +60,46 @@ h1 {
 #contact {
   display: flex;
   justify-content: space-evenly;
+  margin: 6rem;
+  flex-wrap: wrap;
 }
 
-#contact a {
+a {
   text-decoration: none;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6rem;
+  background-color: darkcyan;
+  color: #fff;
+}
+
+@media screen and (width: 600px) {
+  body {
+      background-color: red;
+  }
+}
+
+/* 1200px / 16px = 75em */
+@media (max-width: 75em) {
+  html {
+    font-size: 60%;
+  }
+}
+
+/* 980px / 16px = 61.25em */
+@media (max-width: 61.25em) {
+  html {
+    font-size: 58%;
+  }
+}
+
+/* 460px / 16px = 28.75em */
+@media (max-width: 28.75em) {
+  html {
+    font-size: 55%;
+  }
 }
