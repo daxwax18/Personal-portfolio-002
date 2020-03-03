@@ -3,34 +3,67 @@ import { people } from '../data/people.js'
 import { starships } from '../data/starships.js'
 
 const greetingDiv = document.querySelector('.greeting')
+const maleButton = document.querySelector('#maleButton')
+const femaleButton = document.querySelector('#femaleButton')
+const otherButton = document.querySelector('#otherButton')
 
-const castList = document.createElement("ul")
-
-let counter = 1
-
-people.forEach(person => {
-  let listItem = document.createElement("li")
-  listItem.textContent = person.name
-  castList.appendChild(listItem)
-
-  let anchorWrap = document.createElement("a")
-  anchorWrap.href = "#"
-
-  let imageItem = document.createElement("img")
-  imageItem.src = `https://starwars-visualguide.com/assets/img/characters/${counter}.jpg`
-  
-  // add some way to handle user clicks on the image
-  imageItem.addEventListener("click", (event) => {
-    console.log(event)
-  })
-  anchorWrap.appendChild(imageItem)
-  greetingDiv.appendChild(anchorWrap)
-  counter++
+const otherCharacters = people.filter(person => {
+  if (
+    person.gender === 'hermaphrodite' ||
+    person.gender === 'n/a' ||
+    person.gender === 'none'
+  ) {
+    return person
+  }
 })
 
-greetingDiv.appendChild(castList)
+maleButton.addEventListener('click', event => {
+  populateDOM(people.filter(person => person.gender === 'male'))
+})
 
+femaleButton.addEventListener('click', event => {
+  populateDOM(people.filter(person => person.gender === 'female'))
+})
 
+otherButton.addEventListener('click', event => {
+  populateDOM(otherCharacters)
+})
 
+//"url": "https://swapi.co/api/people/10/"
 
+function getCharNumber(url) {
+  let end = url.lastIndexOf('/')
+  let start = end - 2
+  if(url.charAt(start) === '/') {
+    start++
+  }
+  return url.slice(start, end)
+}
 
+//getCharNumber("https://swapi.co/api/people/1/")
+
+function populateDOM(characters) {
+  characters.forEach(person => {
+    // need to extract the number from the person.url property
+    let charNum = getCharNumber(person.url)
+    let anchorWrap = document.createElement('a')
+    anchorWrap.href = '#'
+
+    let imageItem = document.createElement('img')
+    imageItem.src = `https://starwars-visualguide.com/assets/img/characters/${charNum}.jpg`
+
+    imageItem.addEventListener('error', event => {
+      //console.log(`${event.type}: Loading image\n`)
+      //console.log(event)
+      imageItem.hidden = true
+      //imageItem.src = '../images/uvu-logo.jpeg'
+    })
+
+    // add some way to handle user clicks on the image
+    imageItem.addEventListener('click', event => {
+      console.log(event)
+    })
+    anchorWrap.appendChild(imageItem)
+    greetingDiv.appendChild(anchorWrap)
+  })
+}
