@@ -29,16 +29,37 @@ function populatePokeCard(singlePokemon) {
     pokeCard.addEventListener('click', () =>
       pokeCard.classList.toggle('is-flipped'),
     )
-    let pokeFront = document.createElement('div')
-    pokeFront.className = 'card__face card__face--front'
-    pokeFront.textContent = singlePokemon.name
-    let pokeBack = document.createElement('div')
-    pokeBack.className = 'card__face card__face--back'
-    pokeBack.textContent = 'back'
+    let pokeFront = populateCardFront(singlePokemon)
+    let pokeBack = populateCardBack(singlePokemon)
 
     pokeCard.appendChild(pokeFront)
     pokeCard.appendChild(pokeBack)
     pokeScene.appendChild(pokeCard)
     pokemonGrid.appendChild(pokeScene)
 }
+
+function populateCardFront(pokemon) {
+  let cardFront = document.createElement('div')
+  cardFront.className = 'card__face card__face--front'
+  cardFront.textContent = pokemon.name
+  let frontImage = document.createElement('img')
+  frontImage.src = `../images/${pokemon.id}.png`
+  cardFront.appendChild(frontImage)
+  return cardFront
+}
+
+function populateCardBack(pokemon) {
+  let cardBack = document.createElement('div')
+  cardBack.className = 'card__face card__face--back'
+  let abilityList = document.createElement('ul')
+  pokemon.abilities.forEach(ability => {
+    let abilityName = document.createElement('li')
+    abilityName.textContent = ability.ability.name
+    abilityList.appendChild(abilityName)
+  })
+  cardBack.appendChild(abilityList)
+  return cardBack
+}
+
+
 // https://github.com/fanzeyi/pokemon.json/blob/master/images/001.png?raw=true
