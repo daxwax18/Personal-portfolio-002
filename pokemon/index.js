@@ -1,20 +1,3 @@
-/* const allPokemon = []
-
-function getPokeData(url) {
-  fetch(url).then(function (response) {
-    response.json().then(function (pokeData) {
-      console.log(pokeData.results)
-      const pokeMap = pokeData.results.map(pokemon => {
-        return fetch(pokemon.url).then(resData => {
-          resData.json().then(pokeJson => {
-            allPokemon.push(pokeJson)
-          })
-          
-        })
-      })
-    })
-  })
-} */
 
 // Reusable async function to fetch data from the provided url
 async function getAPIData(url) {
@@ -31,16 +14,14 @@ async function getAPIData(url) {
 getAPIData('https://pokeapi.co/api/v2/pokemon/?&limit=25').then((data) => {
   for (const pokemon of data.results) {
     getAPIData(pokemon.url).then((pokeData) => {
-      populatePokeCards(pokeData)
+      populatePokeCard(pokeData)
     })
   }
 })
 
 let pokemonGrid = document.querySelector('.pokemonGrid')
 
-//getPokeData('https://pokeapi.co/api/v2/pokemon?&limit=25')
-
-function populatePokeCards(singlePokemon) {
+function populatePokeCard(singlePokemon) {
     let pokeScene = document.createElement('div')
     pokeScene.className = 'scene'
     let pokeCard = document.createElement('div')
@@ -60,17 +41,4 @@ function populatePokeCards(singlePokemon) {
     pokeScene.appendChild(pokeCard)
     pokemonGrid.appendChild(pokeScene)
 }
-
-/* var card = document.querySelector('.card')
-card.addEventListener('click', function () {
-  card.classList.toggle('is-flipped')
-}) */
-
-{
-  /*   <div class="scene">
-    <div class="card">
-      <div class="card__face card__face--front">front</div>
-      <div class="card__face card__face--back">back</div>
-    </div>
-  </div> */
-}
+// https://github.com/fanzeyi/pokemon.json/blob/master/images/001.png?raw=true
